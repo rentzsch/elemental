@@ -1,7 +1,7 @@
 /****************************************************************************************
 	elemental.c
 
-	Copyright © 1999-2006 Red Shed Software. All rights reserved.
+	Copyright Â© 1999-2006 Red Shed Software. All rights reserved.
 	by Jonathan 'Wolf' Rentzsch (jon@redshed.net)
 	
 	Note that while FindElement() is the only linear-time function here, when
