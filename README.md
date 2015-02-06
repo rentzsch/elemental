@@ -1,1 +1,1 @@
-A reenterant, intrusive, fast (constant-speed) list in C.
+An intrusive, fast (constant-speed), doubly-linked list in C.

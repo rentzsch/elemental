@@ -1,7 +1,7 @@
 /****************************************************************************************
 	elemental.h
 	
-	A reenterant, intrusive, fast (constant-speed) list.
+	An intrusive, fast (constant-speed), doubly-linked list in C.
 	
 	Copyright © 1999-2006 Red Shed Software. All rights reserved.
 	by Jonathan 'Wolf' Rentzsch (jon@redshed.net)
