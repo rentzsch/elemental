@@ -1,13 +1,13 @@
 /****************************************************************************************
 	elemental.c
 
-	Copyright © 1999-2006 Red Shed Software. All rights reserved.
-	by Jonathan 'Wolf' Rentzsch (jon@redshed.net)
-	
+	Copyright (c) 1999-2015 Jonathan 'Wolf' Rentzsch: http://rentzsch.com
+	Some rights reserved: http://opensource.org/licenses/mit
+
 	Note that while FindElement() is the only linear-time function here, when
 	assertion checking is turned on, many of the so-called constant-time functions
 	implictly call FindElement() (some more than once).
-	
+
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Tue, Apr 6, 1999	Created.
@@ -17,7 +17,7 @@
 	wolf		Tue, Feb 27, 2001	CodeWarrior Pro 6 breaks an idiom: implicit
 									casting of <type>** to void**. I had to make all
 									such casts explicit.
-	
+
 	************************************************************************************/
 
 #include "elemental.h"
@@ -52,9 +52,9 @@ SubtractOffset(
 
 
 /****************************************************************************************
-*	
+*
 *	Lifetime
-*	
+*
 ****************************************************************************************/
 #pragma mark	(Lifetime)
 
@@ -65,7 +65,7 @@ NewElementList(
 {
 	assertPtr( list );
 	list->first = list->last = NULL;
-	
+
 }
 
 	extern
@@ -77,9 +77,9 @@ DeleteElementList(
 }
 
 /****************************************************************************************
-*	
+*
 *	Putters
-*	
+*
 ****************************************************************************************/
 #pragma mark	(Putters)
 
@@ -88,7 +88,7 @@ DeleteElementList(
 	---------	-----------------	-----------------------------------------------------
 	wolf		Tue, Apr 6, 1999	Created.
 	wolf		Wed, May 31, 2000	Updated to support the new list field in Element.
-	
+
 	************************************************************************************/
 
 	void
@@ -97,11 +97,11 @@ PutFirstElement(
 	ElementList		*list )
 {
 	Element	*element_ = (Element*) element;
-	
+
 	assertElement( element );
 	assertList( list );
 	assert( !FindElement( element, list ) );
-	
+
 	if( list->first ) {
 		element_->prev = NULL;
 		element_->next = list->first;
@@ -113,7 +113,7 @@ PutFirstElement(
 		element_->prev = element_->next = NULL;
 		element_->list = list;
 	}
-	
+
 	assert( list->first == element );
 }
 
@@ -121,7 +121,7 @@ PutFirstElement(
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Tue, Apr 6, 1999	Created.
-	
+
 	************************************************************************************/
 
 	void
@@ -130,11 +130,11 @@ PutLastElement(
 	ElementList		*list )
 {
 	Element	*element_ = (Element*) element;
-	
+
 	assertElement( element );
 	assertList( list );
 	assert( !FindElement( element, list ) );
-	
+
 	if( list->first ) {
 		element_->prev = list->last;
 		element_->next = NULL;
@@ -146,7 +146,7 @@ PutLastElement(
 		element_->prev = element_->next = NULL;
 		element_->list = list;
 	}
-	
+
 	assert( list->last == element );
 }
 
@@ -155,7 +155,7 @@ PutLastElement(
 	---------	-----------------	-----------------------------------------------------
 	wolf		Tue, Apr 6, 1999	Created.
 	wolf		Wed, May 31, 2000	Updated to support the new list field in Element.
-	
+
 	************************************************************************************/
 
 	void
@@ -166,14 +166,14 @@ PutBeforeElement(
 {
 	Element	*element_ = (Element*) element;
 	Element	*before_ = (Element*) before;
-	
+
 	assertElement( element );
 	assertElementIfNotNil( before );
 	assert( element != before );
 	assertList( list );
 	assert( !FindElement( element, list ) );
 	assertIf( before, FindElement( before, list ) );
-	
+
 	if( list->first ) {
 		if( before_ == NULL || list->first == before_ )
 			PutLastElement( element_, list );
@@ -189,7 +189,7 @@ PutBeforeElement(
 		element_->prev = element_->next = NULL;
 		element_->list = list;
 	}
-	
+
 	assertIf( before, before_->prev == element && element_->next == before );
 }
 
@@ -198,7 +198,7 @@ PutBeforeElement(
 	---------	-----------------	-----------------------------------------------------
 	wolf		Tue, Apr 6, 1999	Created.
 	wolf		Wed, May 31, 2000	Updated to support the new list field in Element.
-	
+
 	************************************************************************************/
 
 	void
@@ -209,14 +209,14 @@ PutAfterElement(
 {
 	Element	*element_ = (Element*) element;
 	Element	*after_ = (Element*) after;
-	
+
 	assertElement( element );
 	assertElementIfNotNil( after );
 	assert( element != after );
 	assertList( list );
 	assert( !FindElement( element, list ) );
 	assertIf( after, FindElement( after, list ) );
-	
+
 	if( list->first ) {
 		if( after_ == NULL || list->last == after_ )
 			PutFirstElement( element_, list );
@@ -232,14 +232,14 @@ PutAfterElement(
 		element_->prev = element_->next = NULL;
 		element_->list = list;
 	}
-	
+
 	assertIf( after, after_->next == element && element_->prev == after );
 }
 
 /****************************************************************************************
-*	
+*
 *	Accessors
-*	
+*
 ****************************************************************************************/
 #pragma mark	-
 #pragma mark	(Accessors)
@@ -248,7 +248,7 @@ PutAfterElement(
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Tue, Apr 6, 1999	Created.
-	
+
 	************************************************************************************/
 
 	void
@@ -258,7 +258,7 @@ FirstElement(
 {
 	assertPtr( element );
 	assertList( list );
-	
+
 	*element = list->first;
 }
 
@@ -266,7 +266,7 @@ FirstElement(
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Tue, Apr 6, 1999	Created.
-	
+
 	************************************************************************************/
 
 	void
@@ -276,7 +276,7 @@ LastElement(
 {
 	assertPtr( element );
 	assertList( list );
-	
+
 	*element = list->last;
 }
 
@@ -284,7 +284,7 @@ LastElement(
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Tue, Apr 6, 1999	Created.
-	
+
 	************************************************************************************/
 
 	void
@@ -293,10 +293,10 @@ NextElement(
 	void		**nextElement )
 {
 	Element	*element_ = (Element*) element;
-	
+
 	assertElement( element );
 	assertPtr( nextElement );
-	
+
 	*nextElement = element_->next;
 }
 
@@ -304,7 +304,7 @@ NextElement(
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Tue, Apr 6, 1999	Created.
-	
+
 	************************************************************************************/
 
 	void
@@ -313,10 +313,10 @@ PrevElement(
 	void		**prevElement )
 {
 	Element	*element_ = (Element*) element;
-	
+
 	assertElement( element );
 	assertPtr( prevElement );
-	
+
 	*prevElement= element_->prev;
 }
 
@@ -324,7 +324,7 @@ PrevElement(
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Fri, Apr 16, 1999	Created.
-	
+
 	************************************************************************************/
 
 	bool
@@ -333,10 +333,10 @@ FindElement(
 	ElementList		*list )
 {
 	Element	*element_ = NULL;
-	
+
 	assertElement( element );
 	assertList( list );
-	
+
 	FirstElement( (void**) &element_, list );
 	while( element_ ) {
 		if( element_ == element )
@@ -350,7 +350,7 @@ FindElement(
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Wed, May 31, 2000	Created.
-	
+
 	************************************************************************************/
 
 	ElementList*
@@ -358,10 +358,10 @@ GetElementList(
 	void	*element )
 {
 	Element	*element_ = (Element*) element;
-	
+
 	assertElement( element );
 	assert( FindElement( element, element_->list ) );
-	
+
 	return( element_->list );
 }
 
@@ -369,7 +369,7 @@ GetElementList(
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Wed, May 31, 2000	Created.
-	
+
 	************************************************************************************/
 
 	bool
@@ -377,14 +377,14 @@ IsListEmpty(
 	ElementList	*list )
 {
 	assertList( list );
-	
+
 	return( list->first == NULL );
 }
 
 /****************************************************************************************
-*	
+*
 *	Grabbers
-*	
+*
 ****************************************************************************************/
 #pragma mark	-
 #pragma mark	(Grabbers)
@@ -394,7 +394,7 @@ IsListEmpty(
 	---------	-----------------	-----------------------------------------------------
 	wolf		Tue, Apr 6, 1999	Created.
 	wolf		Wed, May 31, 2000	Updated to support the new list field in Element.
-	
+
 	************************************************************************************/
 
 	void
@@ -403,10 +403,10 @@ RemoveElement(
 	ElementList		*list )
 {
 	Element	*element_ = (Element*) element;
-	
+
 	assertElement( element );
 	assertList( list );
-	
+
 	if( list->first == element_ )
 		list->first = element_->next;
 	if( list->last == element_ )
@@ -417,7 +417,7 @@ RemoveElement(
 		element_->next->prev = element_->prev;
 	element_->prev = element_->next = NULL;
 	element_->list = NULL;
-	
+
 	assert( !FindElement( element, list ) );
 }
 
@@ -425,7 +425,7 @@ RemoveElement(
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Tue, Apr 6, 1999	Created.
-	
+
 	************************************************************************************/
 
 	void
@@ -435,11 +435,11 @@ GrabFirstElement(
 {
 	assertPtr( element );
 	assertList( list );
-	
+
 	FirstElement( element, list );
 	if( *element )
 		RemoveElement( *element, list );
-	
+
 	assertIf( *element, !FindElement( *element, list ) );
 }
 
@@ -447,7 +447,7 @@ GrabFirstElement(
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Tue, Apr 6, 1999	Created.
-	
+
 	************************************************************************************/
 
 	void
@@ -457,11 +457,11 @@ GrabLastElement(
 {
 	assertPtr( element );
 	assertList( list );
-	
+
 	LastElement( element, list );
 	if( *element )
 		RemoveElement( *element, list );
-	
+
 	assertIf( *element, !FindElement( *element, list ) );
 }
 
@@ -469,7 +469,7 @@ GrabLastElement(
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Tue, Apr 6, 1999	Created.
-	
+
 	************************************************************************************/
 
 	void
@@ -481,10 +481,10 @@ GrabNextElement(
 	assertElement( element );
 	assertPtr( nextElement );
 	assertList( list );
-	
+
 	NextElement( element, nextElement );
 	RemoveElement( element, list );
-	
+
 	assert( !FindElement( element, list ) );
 	assertIf( *nextElement, FindElement( *nextElement, list ) );
 }
@@ -493,7 +493,7 @@ GrabNextElement(
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Tue, Apr 6, 1999	Created.
-	
+
 	************************************************************************************/
 
 	void
@@ -505,18 +505,18 @@ GrabPrevElement(
 	assertElement( element );
 	assertPtr( prevElement );
 	assertList( list );
-	
+
 	PrevElement( element, prevElement );
 	RemoveElement( element, list );
-	
+
 	assert( !FindElement( element, list ) );
 	assertIf( *prevElement, FindElement( *prevElement, list ) );
 }
 
 /****************************************************************************************
-*	
+*
 *	Offset Putters
-*	
+*
 ****************************************************************************************/
 #pragma mark	-
 #pragma mark	(Offset Putters)
@@ -525,7 +525,7 @@ GrabPrevElement(
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Tue, Apr 6, 1999	Created.
-	
+
 	************************************************************************************/
 
 	void
@@ -541,7 +541,7 @@ PutFirstElementOff(
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Tue, Apr 6, 1999	Created.
-	
+
 	************************************************************************************/
 
 	void
@@ -557,7 +557,7 @@ PutLastElementOff(
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Tue, Apr 6, 1999	Created.
-	
+
 	************************************************************************************/
 
 	void
@@ -574,7 +574,7 @@ PutBeforeElementOff(
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Tue, Apr 6, 1999	Created.
-	
+
 	************************************************************************************/
 
 	void
@@ -590,9 +590,9 @@ PutAfterElementOff(
 
 
 /****************************************************************************************
-*	
+*
 *	Offset Accessors
-*	
+*
 ****************************************************************************************/
 #pragma mark	-
 #pragma mark	(Offset Accessors)
@@ -601,7 +601,7 @@ PutAfterElementOff(
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Tue, Apr 6, 1999	Created.
-	
+
 	************************************************************************************/
 
 	void
@@ -618,7 +618,7 @@ FirstElementOff(
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Tue, Apr 6, 1999	Created.
-	
+
 	************************************************************************************/
 
 	void
@@ -635,7 +635,7 @@ LastElementOff(
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Tue, Apr 6, 1999	Created.
-	
+
 	************************************************************************************/
 
 	void
@@ -652,7 +652,7 @@ NextElementOff(
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Tue, Apr 6, 1999	Created.
-	
+
 	************************************************************************************/
 
 	void
@@ -669,7 +669,7 @@ PrevElementOff(
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Fri, Apr 16, 1999	Created.
-	
+
 	************************************************************************************/
 
 	bool
@@ -685,7 +685,7 @@ FindElementOff(
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Wed, May 31, 2000	Created.
-	
+
 	************************************************************************************/
 
 	ElementList*
@@ -697,9 +697,9 @@ GetElementListOff(
 }
 
 /****************************************************************************************
-*	
+*
 *	Offset Grabbers
-*	
+*
 ****************************************************************************************/
 #pragma mark	-
 #pragma mark	(Offset Grabbers)
@@ -708,7 +708,7 @@ GetElementListOff(
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Tue, Apr 6, 1999	Created.
-	
+
 	************************************************************************************/
 
 	void
@@ -724,7 +724,7 @@ RemoveElementOff(
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Tue, Apr 6, 1999	Created.
-	
+
 	************************************************************************************/
 
 	void
@@ -741,7 +741,7 @@ GrabFirstElementOff(
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Tue, Apr 6, 1999	Created.
-	
+
 	************************************************************************************/
 
 	void
@@ -758,7 +758,7 @@ GrabLastElementOff(
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Tue, Apr 6, 1999	Created.
-	
+
 	************************************************************************************/
 
 	void
@@ -776,7 +776,7 @@ GrabNextElementOff(
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Tue, Apr 6, 1999	Created.
-	
+
 	************************************************************************************/
 
 	void
@@ -791,9 +791,9 @@ GrabPrevElementOff(
 }
 
 /****************************************************************************************
-*	
+*
 *	Implementation
-*	
+*
 ****************************************************************************************/
 #pragma mark	-
 #pragma mark	(Private)
@@ -802,7 +802,7 @@ GrabPrevElementOff(
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Wed, Apr 14, 1999	Created.
-	
+
 	************************************************************************************/
 
 	void*
@@ -811,13 +811,13 @@ AddOffset(
 	size_t	offset )
 {
 	char	*result = (char*) element;
-	
+
 	assertPtrIfNotNil( element );
 	assert( offset >= 0 && offset < 1024 );
-	
+
 	if( element )
 		result += offset;
-	
+
 	return( result );
 }
 
@@ -825,7 +825,7 @@ AddOffset(
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Wed, Apr 14, 1999	Created.
-	
+
 	************************************************************************************/
 
 	void*
@@ -834,13 +834,13 @@ SubtractOffset(
 	size_t	offset )
 {
 	char	*result = (char*) element;
-	
+
 	assertPtrIfNotNil( element );
 	assert( offset >= 0 && offset < 1024 );
-	
+
 	if( element )
 		result -= offset;
-	
+
 	return( result );
 }
 
@@ -848,7 +848,7 @@ SubtractOffset(
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Fri, Apr 16, 1999	Created.
-	
+
 	************************************************************************************/
 
 #if	UseAssertions
@@ -857,7 +857,7 @@ assertElement(
 	void	*element )
 {
 	Element	*element_ = (Element*) element;
-	
+
 	assertPtr( element );
 	assertPtrIfNotNil( element_->next );
 	assertPtrIfNotNil( element_->prev );
@@ -868,7 +868,7 @@ assertElement(
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Fri, Apr 16, 1999	Created.
-	
+
 	************************************************************************************/
 
 #if	UseAssertions

@@ -1,11 +1,11 @@
 /****************************************************************************************
 	elemental.h
-	
+
 	An intrusive, fast (constant-speed), doubly-linked list in C.
-	
-	Copyright © 1999-2006 Red Shed Software. All rights reserved.
-	by Jonathan 'Wolf' Rentzsch (jon@redshed.net)
-	
+
+	Copyright (c) 1999-2015 Jonathan 'Wolf' Rentzsch: http://rentzsch.com
+	Some rights reserved: http://opensource.org/licenses/mit
+
 	Commenter	Date				Comment
 	---------	-----------------	-----------------------------------------------------
 	wolf		Tue, Apr 6, 1999	Created.
@@ -15,7 +15,7 @@
 	wolf		Tue, Feb 27, 2001	CodeWarrior Pro 6 breaks an idiom: implicit
 									casting of <type>** to void**. I had to make all
 									such casts explicit.
-	
+
 	************************************************************************************/
 
 #ifndef		_elemental_
@@ -30,9 +30,9 @@
 #endif
 
 /**************************
-*	
+*
 *	Types
-*	
+*
 **************************/
 #pragma mark	(Types)
 
@@ -43,7 +43,7 @@ struct	Element	{
 	Element		*next;
 	Element		*prev;
 	ElementList	*list;
-	
+
 #ifdef	__cplusplus
 	Element() : next( NULL ), prev( NULL ), list( NULL ){}
 #endif
@@ -52,7 +52,7 @@ struct	Element	{
 struct	ElementList	{
 	Element	*first;
 	Element	*last;
-	
+
 #ifdef	__cplusplus
 	ElementList() { NewElementList(this); }
 	~ElementList() { DeleteElementList(this); }
@@ -60,9 +60,9 @@ struct	ElementList	{
 };
 
 /**************************
-*	
+*
 *	Lifetime
-*	
+*
 **************************/
 #pragma mark	-
 #pragma mark	(Lifetime)
@@ -78,9 +78,9 @@ DeleteElementList(
 	ElementList	*list );
 
 /**************************
-*	
+*
 *	Putters
-*	
+*
 **************************/
 #pragma mark	-
 #pragma mark	(Putters)
@@ -92,7 +92,7 @@ DeleteElementList(
 PutFirstElement(
 	void			*element,
 	ElementList		*list );
-	
+
 //	If list == a, b, c && element == x
 //	Then list = a, b, c, x
 	extern
@@ -122,9 +122,9 @@ PutAfterElement(
 	ElementList		*list );
 
 /**************************
-*	
+*
 *	Accessors
-*	
+*
 **************************/
 #pragma mark	-
 #pragma mark	(Accessors)
@@ -173,7 +173,7 @@ FindElement(
 	ElementList*
 GetElementList(
 	void	*element );
-	
+
 //	Returns whether the list is empty.
 	extern
 	bool
@@ -181,9 +181,9 @@ IsListEmpty(
 	ElementList	*list );
 
 /**************************
-*	
+*
 *	Grabbing
-*	
+*
 **************************/
 #pragma mark	-
 #pragma mark	(Grabbing)
@@ -232,9 +232,9 @@ GrabPrevElement(
 	ElementList		*list );
 
 /**************************
-*	
+*
 *	Offset Putters
-*	
+*
 **************************/
 #pragma mark	-
 #pragma mark	(Offset Putters)
@@ -247,7 +247,7 @@ PutFirstElementOff(
 	void			*element,
 	ElementList		*list,
 	size_t			offset );
-	
+
 //	If list == a, b, c && element == x
 //	Then list = a, b, c, x
 	extern
@@ -280,9 +280,9 @@ PutAfterElementOff(
 	size_t			offset );
 
 /**************************
-*	
+*
 *	Offset Accessors
-*	
+*
 **************************/
 #pragma mark	-
 #pragma mark	(Offset Accessors)
@@ -339,9 +339,9 @@ GetElementListOff(
 	size_t	offset );
 
 /**************************
-*	
+*
 *	Offset Grabbing
-*	
+*
 **************************/
 #pragma mark	-
 #pragma mark	(Offset Grabbing)
@@ -395,9 +395,9 @@ GrabPrevElementOff(
 	size_t			offset );
 
 /**************************
-*	
+*
 *	Type Putters
-*	
+*
 **************************/
 #pragma mark	-
 #pragma mark	(Type Putters)
@@ -406,7 +406,7 @@ GrabPrevElementOff(
 //	Then list = x, a, b, c
 #define	PutFirstElementType( ELEMENT, LIST, STRUCTURE, FIELD )	\
 			PutFirstElementOff( (ELEMENT), (LIST), offsetof( STRUCTURE, FIELD ) )
-	
+
 //	If list == a, b, c && element == x
 //	Then list = a, b, c, x
 #define	PutLastElementType( ELEMENT, LIST, STRUCTURE, FIELD )	\
@@ -425,9 +425,9 @@ GrabPrevElementOff(
 			PutAfterElementOff( (ELEMENT), (AFTER), (LIST), offsetof( STRUCTURE, FIELD ) )
 
 /**************************
-*	
+*
 *	Type Accessors
-*	
+*
 **************************/
 #pragma mark	-
 #pragma mark	(Type Accessors)
@@ -461,9 +461,9 @@ GrabPrevElementOff(
 			GetElementListOff( (ELEMENT), offsetof( STRUCTURE, FIELD ) )
 
 /**************************
-*	
+*
 *	Type Grabbing
-*	
+*
 **************************/
 #pragma mark	-
 #pragma mark	(Type Grabbing)
