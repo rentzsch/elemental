@@ -22,12 +22,9 @@
 #define		_elemental_
 
 #include <stddef.h>
+#include <stdbool.h>
 
-#ifdef	__cplusplus
-	extern "C" {
-#else
-	typedef int bool;
-#endif
+__BEGIN_DECLS
 
 /**************************
 *
@@ -67,12 +64,10 @@ struct	ElementList	{
 #pragma mark	-
 #pragma mark	(Lifetime)
 
-	extern
 	void
 NewElementList(
 	ElementList	*list );
 
-	extern
 	void
 DeleteElementList(
 	ElementList	*list );
@@ -87,7 +82,6 @@ DeleteElementList(
 
 //	If list == a, b, c && element == x
 //	Then list = x, a, b, c
-	extern
 	void
 PutFirstElement(
 	void			*element,
@@ -95,7 +89,6 @@ PutFirstElement(
 
 //	If list == a, b, c && element == x
 //	Then list = a, b, c, x
-	extern
 	void
 PutLastElement(
 	void			*element,
@@ -104,7 +97,6 @@ PutLastElement(
 //	If list == a, b, c && element == x && before == b
 //	Then list = a, x, b, c
 //	Special Case: if before == NULL then PutLastElement( element )
-	extern
 	void
 PutBeforeElement(
 	void			*element,
@@ -114,7 +106,6 @@ PutBeforeElement(
 //	If list == a, b, c && element == x && after == b
 //	Then list = a, b, x, c
 //	Special Case: if after == NULL then PutFirstElement( element )
-	extern
 	void
 PutAfterElement(
 	void			*element,
@@ -131,7 +122,6 @@ PutAfterElement(
 
 //	If list == a, b, c
 //	Then *element = a
-	extern
 	void
 FirstElement(
 	void			**element,
@@ -139,7 +129,6 @@ FirstElement(
 
 //	If list == a, b, c
 //	Then *element = c
-	extern
 	void
 LastElement(
 	void			**element,
@@ -147,7 +136,6 @@ LastElement(
 
 //	If list == a, b, c && element == b
 //	Then *nextElement = c
-	extern
 	void
 NextElement(
 	void		*element,
@@ -155,27 +143,23 @@ NextElement(
 
 //	If list == a, b, c && element == b
 //	Then *prevElement = a
-	extern
 	void
 PrevElement(
 	void		*element,
 	void		**prevElement );
 
 //	Return whether element is in list. The only linear-time function here.
-	extern
 	bool
 FindElement(
 	void			*element,
 	ElementList		*list );
 
 //	Returns the given element's list.
-	extern
 	ElementList*
 GetElementList(
 	void	*element );
 
 //	Returns whether the list is empty.
-	extern
 	bool
 IsListEmpty(
 	ElementList	*list );
@@ -191,7 +175,6 @@ IsListEmpty(
 //	If list == a, b, c && element == b
 //	Then list = a, c
 //	It is okay if element is not in list.
-	extern
 	void
 RemoveElement(
 	void			*element,
@@ -199,7 +182,6 @@ RemoveElement(
 
 //	If list == a, b, c
 //	Then list = b, c && *element = a
-	extern
 	void
 GrabFirstElement(
 	void			**element,
@@ -207,7 +189,6 @@ GrabFirstElement(
 
 //	If list == a, b, c
 //	Then list = a, b && *element = c
-	extern
 	void
 GrabLastElement(
 	void			**element,
@@ -215,7 +196,6 @@ GrabLastElement(
 
 //	If list == a, b, c && element == b
 //	Then list = a, c && *nextElement = c
-	extern
 	void
 GrabNextElement(
 	void			*element,
@@ -224,7 +204,6 @@ GrabNextElement(
 
 //	If list == a, b, c && element == b
 //	Then list = a, c && *prevElement = a
-	extern
 	void
 GrabPrevElement(
 	void			*element,
@@ -241,7 +220,6 @@ GrabPrevElement(
 
 //	If list == a, b, c && element == x
 //	Then list = x, a, b, c
-	extern
 	void
 PutFirstElementOff(
 	void			*element,
@@ -250,7 +228,6 @@ PutFirstElementOff(
 
 //	If list == a, b, c && element == x
 //	Then list = a, b, c, x
-	extern
 	void
 PutLastElementOff(
 	void			*element,
@@ -260,7 +237,6 @@ PutLastElementOff(
 //	If list == a, b, c && element == x && before == b
 //	Then list = a, x, b, c
 //	Special Case: if before == NULL then PutLastElement( element )
-	extern
 	void
 PutBeforeElementOff(
 	void			*element,
@@ -271,7 +247,6 @@ PutBeforeElementOff(
 //	If list == a, b, c && element == x && after == b
 //	Then list = a, b, x, c
 //	Special Case: if after == NULL then PutFirstElement( element )
-	extern
 	void
 PutAfterElementOff(
 	void			*element,
@@ -289,7 +264,6 @@ PutAfterElementOff(
 
 //	If list == a, b, c
 //	Then *element = a
-	extern
 	void
 FirstElementOff(
 	void			**element,
@@ -298,7 +272,6 @@ FirstElementOff(
 
 //	If list == a, b, c
 //	Then *element = c
-	extern
 	void
 LastElementOff(
 	void			**element,
@@ -307,7 +280,6 @@ LastElementOff(
 
 //	If list == a, b, c && element == b
 //	Then *nextElement = c
-	extern
 	void
 NextElementOff(
 	void		*element,
@@ -316,7 +288,6 @@ NextElementOff(
 
 //	If list == a, b, c && element == b
 //	Then *prevElement = a
-	extern
 	void
 PrevElementOff(
 	void		*element,
@@ -324,7 +295,6 @@ PrevElementOff(
 	size_t		offset );
 
 //	Return whether element is in list. The only linear-time function here.
-	extern
 	bool
 FindElementOff(
 	void			*element,
@@ -332,7 +302,6 @@ FindElementOff(
 	size_t			offset );
 
 //	Returns the given element's list.
-	extern
 	ElementList*
 GetElementListOff(
 	void	*element,
@@ -349,7 +318,6 @@ GetElementListOff(
 //	If list == a, b, c && element == b
 //	Then list = a, c
 //	It is okay if element is not in list.
-	extern
 	void
 RemoveElementOff(
 	void			*element,
@@ -358,7 +326,6 @@ RemoveElementOff(
 
 //	If list == a, b, c
 //	Then list = b, c && *element = a
-	extern
 	void
 GrabFirstElementOff(
 	void			**element,
@@ -367,7 +334,6 @@ GrabFirstElementOff(
 
 //	If list == a, b, c
 //	Then list = a, b && *element = c
-	extern
 	void
 GrabLastElementOff(
 	void			**element,
@@ -376,7 +342,6 @@ GrabLastElementOff(
 
 //	If list == a, b, c && element == b
 //	Then list = a, c && *nextElement = c
-	extern
 	void
 GrabNextElementOff(
 	void			*element,
@@ -386,7 +351,6 @@ GrabNextElementOff(
 
 //	If list == a, b, c && element == b
 //	Then list = a, c && *prevElement = a
-	extern
 	void
 GrabPrevElementOff(
 	void			*element,
@@ -435,7 +399,7 @@ GrabPrevElementOff(
 //	If list == a, b, c
 //	Then *element = a
 #define	FirstElementType( ELEMENT, LIST, STRUCTURE, FIELD )	\
-			FirstElementOff( (ELEMENT), (LIST), offsetof( STRUCTURE, FIELD ) )
+			FirstElementOff( (void**)(ELEMENT), (LIST), offsetof( STRUCTURE, FIELD ) )
 
 //	If list == a, b, c
 //	Then *element = c
@@ -494,7 +458,5 @@ GrabPrevElementOff(
 #define	GrabPrevElementType( ELEMENT, PREVELEMENT, LIST, STRUCTURE, FIELD )	\
 			GrabPrevElementOff( (ELEMENT), (PREVELEMENT), (LIST), offsetof( STRUCTURE, FIELD ) )
 
-#ifdef	__cplusplus
-}
-#endif
+__END_DECLS
 #endif	//	_elemental_
