@@ -20,20 +20,31 @@
 
 	************************************************************************************/
 
-#include "elemental.h"
 #include <assert.h>
-
-#define UseAssertions 1
 #include <stdint.h>
-#define assertIf( CONDITION, ASSERTION )	if((CONDITION)){assert((ASSERTION));}
-#define assertPtr(PTR)						assert((PTR) && (((intptr_t)(PTR))%4)==0)
-#define assertPtrIfNotNil(PTR)				if((PTR)){(((intptr_t)(PTR))%4)==0;}
 
-#if	UseAssertions
-	void	assertElement( void *element );
-	#define	assertElementIfNotNil( ELEMENT )	if((ELEMENT))assertElement((ELEMENT))
-	void	assertList( ElementList *list );
+#include "elemental.h"
+
+#ifndef elementalAssertions
+    #ifdef DEBUG
+        #define elementalAssertions DEBUG
+    #else
+        #define elementalAssertions 0
+    #endif
+#endif
+#if	elementalAssertions
+    #define assertIf( CONDITION, ASSERTION )  if((CONDITION)){assert((ASSERTION));}
+    #define assertPtr(PTR)                    assert((PTR) && (((intptr_t)(PTR))%4)==0)
+    #define assertPtrIfNotNil(PTR)            if((PTR)){(((intptr_t)(PTR))%4)==0;}
+    
+    void assertElement( void *element );
+    #define assertElementIfNotNil( ELEMENT )  if((ELEMENT))assertElement((ELEMENT))
+    void assertList( ElementList *list );
 #else
+    #define assertIf( CONDITION, ASSERTION )
+    #define assertPtr(PTR)
+    #define assertPtrIfNotNil(PTR)
+
 	#define	assertElement( ELEMENT )
 	#define	assertElementIfNotNil( ELEMENT )
 	#define	assertList( LIST )
@@ -851,7 +862,7 @@ SubtractOffset(
 
 	************************************************************************************/
 
-#if	UseAssertions
+#if	elementalAssertions
 	void
 assertElement(
 	void	*element )
@@ -871,7 +882,7 @@ assertElement(
 
 	************************************************************************************/
 
-#if	UseAssertions
+#if	elementalAssertions
 	void
 assertList(
 	ElementList	*list )
