@@ -33,14 +33,16 @@
     #endif
 #endif
 #if	elementalAssertions
+    #define assertTrue( CONDITION )           assert(CONDITION)
     #define assertIf( CONDITION, ASSERTION )  if((CONDITION)){assert((ASSERTION));}
     #define assertPtr(PTR)                    assert((PTR) && (((intptr_t)(PTR))%4)==0)
     #define assertPtrIfNotNil(PTR)            if((PTR)){(((intptr_t)(PTR))%4)==0;}
-    
+
     void assertElement( void *element );
     #define assertElementIfNotNil( ELEMENT )  if((ELEMENT))assertElement((ELEMENT))
     void assertList( ElementList *list );
 #else
+    #define assertTrue( CONDITION )
     #define assertIf( CONDITION, ASSERTION )
     #define assertPtr(PTR)
     #define assertPtrIfNotNil(PTR)
@@ -111,7 +113,7 @@ PutFirstElement(
 
 	assertElement( element );
 	assertList( list );
-	assert( !FindElement( element, list ) );
+	assertTrue( !FindElement( element, list ) );
 
 	if( list->first ) {
 		element_->prev = NULL;
@@ -125,7 +127,7 @@ PutFirstElement(
 		element_->list = list;
 	}
 
-	assert( list->first == element );
+	assertTrue( list->first == element );
 }
 
 /****************************************************************************************
@@ -144,7 +146,7 @@ PutLastElement(
 
 	assertElement( element );
 	assertList( list );
-	assert( !FindElement( element, list ) );
+	assertTrue( !FindElement( element, list ) );
 
 	if( list->first ) {
 		element_->prev = list->last;
@@ -158,7 +160,7 @@ PutLastElement(
 		element_->list = list;
 	}
 
-	assert( list->last == element );
+	assertTrue( list->last == element );
 }
 
 /****************************************************************************************
@@ -180,9 +182,9 @@ PutBeforeElement(
 
 	assertElement( element );
 	assertElementIfNotNil( before );
-	assert( element != before );
+	assertTrue( element != before );
 	assertList( list );
-	assert( !FindElement( element, list ) );
+	assertTrue( !FindElement( element, list ) );
 	assertIf( before, FindElement( before, list ) );
 
 	if( list->first ) {
@@ -223,9 +225,9 @@ PutAfterElement(
 
 	assertElement( element );
 	assertElementIfNotNil( after );
-	assert( element != after );
+	assertTrue( element != after );
 	assertList( list );
-	assert( !FindElement( element, list ) );
+	assertTrue( !FindElement( element, list ) );
 	assertIf( after, FindElement( after, list ) );
 
 	if( list->first ) {
@@ -371,7 +373,7 @@ GetElementList(
 	Element	*element_ = (Element*) element;
 
 	assertElement( element );
-	assert( FindElement( element, element_->list ) );
+	assertTrue( FindElement( element, element_->list ) );
 
 	return( element_->list );
 }
@@ -429,7 +431,7 @@ RemoveElement(
 	element_->prev = element_->next = NULL;
 	element_->list = NULL;
 
-	assert( !FindElement( element, list ) );
+	assertTrue( !FindElement( element, list ) );
 }
 
 /****************************************************************************************
@@ -496,7 +498,7 @@ GrabNextElement(
 	NextElement( element, nextElement );
 	RemoveElement( element, list );
 
-	assert( !FindElement( element, list ) );
+	assertTrue( !FindElement( element, list ) );
 	assertIf( *nextElement, FindElement( *nextElement, list ) );
 }
 
@@ -520,7 +522,7 @@ GrabPrevElement(
 	PrevElement( element, prevElement );
 	RemoveElement( element, list );
 
-	assert( !FindElement( element, list ) );
+	assertTrue( !FindElement( element, list ) );
 	assertIf( *prevElement, FindElement( *prevElement, list ) );
 }
 
@@ -824,7 +826,7 @@ AddOffset(
 	char	*result = (char*) element;
 
 	assertPtrIfNotNil( element );
-	assert( offset >= 0 && offset < 1024 );
+	assertTrue( offset >= 0 && offset < 1024 );
 
 	if( element )
 		result += offset;
@@ -847,7 +849,7 @@ SubtractOffset(
 	char	*result = (char*) element;
 
 	assertPtrIfNotNil( element );
-	assert( offset >= 0 && offset < 1024 );
+	assertTrue( offset >= 0 && offset < 1024 );
 
 	if( element )
 		result -= offset;
