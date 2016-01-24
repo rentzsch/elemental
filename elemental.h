@@ -3,18 +3,8 @@
 
 	An intrusive, fast (constant-speed), doubly-linked list in C.
 
-	Copyright (c) 1999-2015 Jonathan 'Wolf' Rentzsch: http://rentzsch.com
+	Copyright (c) 1999-2016 Jonathan 'Wolf' Rentzsch: http://rentzsch.com
 	Some rights reserved: http://opensource.org/licenses/mit
-
-	Commenter	Date				Comment
-	---------	-----------------	-----------------------------------------------------
-	wolf		Tue, Apr 6, 1999	Created.
-	wolf		Mon, May 3, 1999	Added ___Type macros.
-	wolf		Wed, May 31, 2000	Now each element stores a pointer to its list.
-									Added GetElementList[Off|Type]() and IsListEmpty().
-	wolf		Tue, Feb 27, 2001	CodeWarrior Pro 6 breaks an idiom: implicit
-									casting of <type>** to void**. I had to make all
-									such casts explicit.
 
 	************************************************************************************/
 
